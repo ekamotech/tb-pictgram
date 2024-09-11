@@ -2,12 +2,19 @@ package com.example.pictgram;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class TbPictgramApplication {
+public class TbPictgramApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TbPictgramApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(TbPictgramApplication.class, args);
+    }
+    
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(TbPictgramApplication.class);
+    }
+    
 }
