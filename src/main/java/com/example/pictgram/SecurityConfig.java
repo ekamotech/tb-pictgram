@@ -36,6 +36,7 @@ public class SecurityConfig {
 
         RequestMatcher publicMatchers = new OrRequestMatcher(
                 new AntPathRequestMatcher("/"),
+                new AntPathRequestMatcher("/favicon.ico"),
                 new AntPathRequestMatcher("/error"),
                 new AntPathRequestMatcher("/h2-console/**"),
                 new AntPathRequestMatcher("/login"),

@@ -1,6 +1,9 @@
 package com.example.pictgram.controller;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +29,9 @@ public class UsersController {
     @Autowired
     private UserRepository repository;
     
+    @Autowired
+    private MessageSource messageSource;
+    
     @GetMapping("/users/new")
     public String newUser(Model model) {
         model.addAttribute("form", new UserForm());
@@ -33,20 +39,21 @@ public class UsersController {
     }
     
     @PostMapping("/user")
-    public String create(@Validated @ModelAttribute("form") UserForm form, BindingResult result, Model model, RedirectAttributes redirAttrs) {
+    public String create(@Validated @ModelAttribute("form") UserForm form, BindingResult result, Model model, RedirectAttributes redirAttrs, Locale locale) {
         
         String name = form.getName();
         String email = form.getEmail();
         String password = form.getPassword();
         
         if (repository.findByUsername(email) != null) {
-            FieldError fieldError = new FieldError(result.getObjectName(), "email", "その E メールはすでに使用されています。");
+            FieldError fieldError = new FieldError(result.getObjectName(), "email", messageSource.getMessage("users.create.error.1", new String[] {}, locale));
+            
             result.addError(fieldError);
         }
         if (result.hasErrors()) {
             model.addAttribute("hasMessage", true);
             model.addAttribute("class", "alert-danger");
-            model.addAttribute("message", "ユーザー登録に失敗しました。");
+            model.addAttribute("message", messageSource.getMessage("users.create.flash.1", new String[] {}, locale));
             return "users/new";
         }
         
