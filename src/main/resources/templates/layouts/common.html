@@ -13,6 +13,11 @@
                     <ul class="navbar-nav ms-auto">
                         <th:block sec:authorize="isAuthenticated()">
                             <li class="nav-item">
+                                <a class="nav-link" th:href="@{/calendars}">
+                                    <img src="/images/icons/calendar.png" th:src="@{/images/icons/calendar.png}">
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" th:href="@{/favorites}">
                                     <img src="/images/icons/heart.png" th:src="@{/images/icons/heart.png}">
                                 </a>
